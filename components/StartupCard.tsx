@@ -3,6 +3,9 @@ import { EyeIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { Author, Startup } from "@/sanity/types";
+
+export type StartupTypeCard = Omit<Startup, "author"> & { author?: Author };
 
 type StartupCardProps = {
   post: StartupTypeCard;
@@ -28,7 +31,7 @@ const StartupCard = ({ post }: StartupCardProps) => {
             <h3 className="text-26-semibold line-clamp-1">{post.title}</h3>
           </Link>
         </div>
-        <Link href={`/user/${post.authorId}`}>
+        <Link href={`/user/${post.author?._id}`}>
           <Image
             src="https://placehold.co/48x48"
             alt="placeholder"
@@ -46,7 +49,7 @@ const StartupCard = ({ post }: StartupCardProps) => {
       </Link>
 
       <div className="flex-between gap-3 mt-5">
-        <Link href={`/?query=${post.category.toLowerCase()}`}>
+        <Link href={`/?query=${post?.category?.toLowerCase()}`}>
           <p className="text-16-medium">{post.category}</p>
         </Link>
         <Button className="startup-card_btn" asChild>
