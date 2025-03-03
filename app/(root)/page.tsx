@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import SearchForm from "../components/SearchForm";
+import SearchForm from "../../components/SearchForm";
 
 export default function Home({}) {
   const searchParams = useSearchParams();
@@ -22,4 +22,3 @@ export default function Home({}) {
     </>
   );
 }
-// NOTE 1:50:59
