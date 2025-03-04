@@ -12,7 +12,6 @@ export default async function Home({}) {
   const query = searchParams.get("query");
   const params = { search: query || null };
   const posts = await client.fetch(STARTUPS_QUERY, params);
-  // 2:56:25
   return (
     <>
       <section className="pink_container">
