@@ -1,16 +1,24 @@
 import { client } from "@/sanity/lib/client";
 import Ping from "./Ping";
 import { STARTUP_VIEWS_QUERY } from "@/sanity/lib/queries";
-
+import { writeClient } from "@/sanity/lib/write-client";
+import { after } from "next/server";
 type ViewProps = {
   id: string;
 };
 
 const View = async ({ id }: ViewProps) => {
-  const { views } = await client
+  const { views, totalViews } = await client
     .withConfig({ useCdn: false })
     .fetch(STARTUP_VIEWS_QUERY, { id });
 
+  after(
+    async () =>
+      await writeClient
+        .patch(id)
+        .set({ views: totalViews + 1 })
+        .commit()
+  );
   // NOTE - Update the number of views
   return (
     <div className="view-container">
